@@ -1,7 +1,7 @@
 import pandas as pd
 import joblib
 import nltk
-from PreProcessamento.preProcessar import pre_processar
+from PreProcessamento.preProcessar import pre_processar_treino
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -10,7 +10,7 @@ from Metricas.metricas import gerar_metricas
 def treinarClassificacaoEmocao(dataset):
     # Pré-processamento
     df = pd.read_csv(dataset, sep=";", encoding="UTF-8", quotechar='"')
-    df["Mensagem"] = [pre_processar(texto) for texto in df["Mensagem"]]
+    df["Mensagem"] = [pre_processar_treino(texto) for texto in df["Mensagem"]]
 
     # Criando a bag_of_words com porcentagem de relevancia para cada palavra
     tfidf = TfidfVectorizer()
