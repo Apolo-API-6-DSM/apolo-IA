@@ -1,5 +1,3 @@
-import pandas as pd
-from .eliminadorRuido import tornar_texto_legivel_humano
 import re
 import nltk
 from nltk import tokenize
@@ -8,8 +6,7 @@ from nltk.stem import RSLPStemmer
 
 stemmer = RSLPStemmer()
 
-def pre_processar_treino(texto):
-    texto = tornar_texto_legivel_humano(texto)
+def pre_processar(texto):
     texto = re.sub(r'[^\w\s]', ' ', texto) #Tirar caracteres especiais
     texto = re.sub(r'\d+', ' ', texto)       # Remove números
     texto = re.sub(r'\b[^eé\s]\b', '', texto)#  Regex para identificar letras sozinhas que não sejam 'e' ou 'é'
@@ -30,4 +27,3 @@ def pre_processar_treino(texto):
         texto_tratado.append(palavra)
 
     return ' '.join(texto_tratado)
-
