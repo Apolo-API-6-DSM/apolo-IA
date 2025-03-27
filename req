@@ -1,0 +1,2 @@
+
+pip install nltk unidecode scikit-learn joblib presidio-analyzer presidio-anonymizer pandas flask
