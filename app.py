@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from Previsao.previsaoEmocao import preverListaChamados
+from Previsao.previsao import preverListaChamados
 
 app = Flask(__name__)
 
@@ -15,7 +15,8 @@ def prever_emocoes():
                 {
                     "chamadoId": c["chamadoId"],
                     "descricao": c["descricao"],
-                    "emocao": r["emocao"]
+                    "emocao": r["emocao"],
+                    "tipoChamado": r["tipoChamado"]
                 }
                 for c, r in zip(chamados, resultados)
             ]

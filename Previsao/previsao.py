@@ -1,11 +1,18 @@
 from PreProcessamento.preProcessamento import pre_processar
 from sklearn.feature_extraction.text import TfidfVectorizer
 import joblib
+import os
 
-tfidf = joblib.load('Treinamento\\Exportados\\emocao_vetorizador.pkl')
-modelo = joblib.load('Treinamento\\Exportados\\modelo_emocao.pkl')
 
-def preverEmocao(texto):
+base_dir = os.getcwd()
+
+tfidfEmocao = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\emocao_vetorizador.pkl')
+modeloEmocao= joblib.load(f'{base_dir}\\Treinamento\\Exportados\\modelo_emocao.pkl')
+
+tfidfTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\tipo_chamado_vetorizador.pkl')
+modeloTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\modelo_tipo_chamado.pkl')
+
+def prever(texto, tfidf, modelo):
     # Pré-processar o texto
     texto_processado = pre_processar(texto)
     
@@ -20,13 +27,14 @@ def preverEmocao(texto):
 def preverListaChamados(chamados):
     chamados_previstos = []
     for chamado in chamados:
-        emocao = preverEmocao(chamado["descricao"])
+        emocao = prever(chamado["descricao"],tfidfEmocao, modeloEmocao)
+        tipoChamado = prever(chamado["descricao"],tfidfTipoChamado, modeloTipoChamado)
         #tipoDocumento = preverTipoDocumento(chamado["descricao"])
         chamado_previsto = {
             "chamadoId":chamado["chamadoId"],
             "decricao":chamado["descricao"],
             "emocao":emocao,
-            #"tipoDocumento":tipoDocumento
+            "tipoChamado":tipoChamado
         }
         chamados_previstos.append(chamado_previsto)
     return chamados_previstos
