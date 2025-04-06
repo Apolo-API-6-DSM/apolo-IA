@@ -47,4 +47,4 @@ def gerar_metricas_tipo_chamados(modelotreinado, X_teste, y_teste):
     
     # Exibir relatório de classificação
     print("\nRelatório de Classificação:")
-    print(classification_report(y_teste, y_pred, target_names=["Reclamacao", "Pedido de Suporte", "Informacao", "Duvida", "Reincidencia"]))
+    print(classification_report(y_teste, y_pred, target_names=["Reclamacao", "Pedido de Suporte", "Duvida"]))

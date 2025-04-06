@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from Previsao.previsao import preverListaChamados
 import requests
 import logging
+from Treinamento.PreProcessamento.eliminadorRuido import tornar_texto_legivel_humano
 
 app = Flask(__name__)
 
