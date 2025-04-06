@@ -71,6 +71,23 @@ def prever_emocoes():
             "message": str(e)
         }), 500
 
+@app.route('/prever/teste', methods=['POST'])
+def prever_emocoes_teste():
+    chamados = request.json.get("chamados", [])
+
+    if not chamados or not isinstance(chamados, list):
+        logging.error("Nenhum chamado fornecido ou formato inválido.")
+        return jsonify({
+            "status": "error",
+            "message": "Nenhum chamado fornecido ou formato inválido."
+        }), 400
+
+    logging.info(f"Recebidos {len(chamados)} chamados para previsão.")
+
+    # Processar os chamados e prever emoção e tipo de chamado
+    resultados = preverListaChamados(chamados)
+
+    return resultados
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True, host='0.0.0.0')

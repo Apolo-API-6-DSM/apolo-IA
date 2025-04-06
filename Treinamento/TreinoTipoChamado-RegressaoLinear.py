@@ -22,8 +22,8 @@ def treinarClassificacaoTipoChamado(df):
     gerar_metricas_tipo_chamados(regressao_logistica, X_teste, y_teste)
 
     # Salvar o modelo e o vetorizador em arquivos
-    joblib.dump(tfidf, 'Treinamento\\Exportados\\tipo_chamado_vetorizador_metricas.pkl')
-    joblib.dump(regressao_logistica, 'Treinamento\\Exportados\\modelo_tipo_chamado_metricas.pkl')
+    joblib.dump(tfidf, 'Treinamento\\Exportados\\RegressaoLinear\\tipo_chamado_vetorizador.pkl')
+    joblib.dump(regressao_logistica, 'Treinamento\\Exportados\\RegressaoLinear\\modelo_tipo_chamado.pkl')
     print("Modelo e vetorizador salvos com sucesso!")
 
 

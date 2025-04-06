@@ -26,8 +26,8 @@ def treinarClassificacaoEmocao(df):
     gerar_metricas_emocoes(regressao_logistica, X_teste, y_teste)
 
     # Salvar o modelo e o vetorizador em arquivos
-    joblib.dump(tfidf, f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\emocao_vetorizador_metricas.pkl')
-    joblib.dump(regressao_logistica, f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\modelo_emocao_metricas.pkl')
+    joblib.dump(tfidf, f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\emocao_vetorizador.pkl')
+    joblib.dump(regressao_logistica, f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\modelo_emocao.pkl')
     print("Modelo e vetorizador salvos com sucesso!")
 
 
