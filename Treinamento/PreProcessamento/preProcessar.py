@@ -30,4 +30,3 @@ def pre_processar_treino(texto):
         texto_tratado.append(palavra)
 
     return ' '.join(texto_tratado)
-

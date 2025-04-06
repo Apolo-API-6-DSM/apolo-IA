@@ -7,10 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from Metricas.metricas import gerar_metricas_tipo_chamados
 
-def treinarClassificacaoTipoChamado(dataset):
+def treinarClassificacaoTipoChamado(df):
     # Pré-processamento
-    df = pd.read_csv(dataset)
-    df = df[~df["TipoChamado"].isin(["Informacao", "Reincidencia"])].reset_index(drop=True)
     df["Mensagem"] = [pre_processar_treino(texto) for texto in df["Mensagem"]]
 
     # Criando a bag_of_words com porcentagem de relevancia para cada palavra
@@ -19,7 +17,7 @@ def treinarClassificacaoTipoChamado(dataset):
 
     #Treinamento
     X_treino, X_teste, y_treino, y_teste = train_test_split(tfidf_tratados, df['TipoChamado'], test_size=0.2, random_state=42, stratify=df['TipoChamado'])
-    regressao_logistica = LogisticRegression()
+    regressao_logistica = LogisticRegression(class_weight='balanced')
     regressao_logistica.fit(X_treino, y_treino)
     gerar_metricas_tipo_chamados(regressao_logistica, X_teste, y_teste)
 
@@ -37,8 +35,9 @@ if __name__ == "__main__":
 
     # Carregar o dataset e verificar as classes
     df = pd.read_csv(dataset)
+    df = df[~df["TipoChamado"].isin(["Informacao", "Reincidencia"])].reset_index(drop=True)
     classes_unicas = df['TipoChamado'].unique()
-    print("\nClasses encontradas na coluna 'TipoChamado':")
+    print("\n\nClasses encontradas na coluna 'TipoChamado':")
     for i, classe in enumerate(classes_unicas):
         print(f"{i}: {classe}")
     
@@ -46,6 +45,6 @@ if __name__ == "__main__":
     contagem = df["TipoChamado"].value_counts()
 
     # Exibe o resultado
-    print("Distribuição de exemplos por categoria:")
+    print("\n\nDistribuição de exemplos por categoria:")
     print(contagem)
-    treinarClassificacaoTipoChamado(dataset)
+    treinarClassificacaoTipoChamado(df)

@@ -6,11 +6,11 @@ import os
 
 base_dir = os.getcwd()
 
-tfidfEmocao = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\emocao_vetorizador.pkl')
-modeloEmocao= joblib.load(f'{base_dir}\\Treinamento\\Exportados\\modelo_emocao.pkl')
+tfidfEmocao = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\emocao_vetorizador.pkl')
+modeloEmocao= joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\modelo_emocao.pkl')
 
-tfidfTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\tipo_chamado_vetorizador.pkl')
-modeloTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\modelo_tipo_chamado.pkl')
+tfidfTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\tipo_chamado_vetorizador.pkl')
+modeloTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\modelo_tipo_chamado.pkl')
 
 def prever(texto, tfidf, modelo):
     # Pré-processar o texto
