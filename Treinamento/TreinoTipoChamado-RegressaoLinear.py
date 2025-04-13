@@ -11,7 +11,7 @@ def treinarClassificacaoTipoChamado(df):
     # Pré-processamento
     df["Mensagem"] = [pre_processar_treino(texto) for texto in df["Mensagem"]]
 
-    # Criando a bag_of_words com porcentagem de relevancia para cada palavra
+    # Criando a com porcentagem de relevancia para cada palavra
     tfidf = TfidfVectorizer(ngram_range=(1, 2))
     tfidf_tratados = tfidf.fit_transform(df["Mensagem"])
 
@@ -29,8 +29,8 @@ def treinarClassificacaoTipoChamado(df):
 
 
 if __name__ == "__main__":
-    nltk.download('stopwords')
-    nltk.download('rslp')
+    nltk.download('all')
+
     dataset = "Treinamento\\Datasets\\TiposArquivosTreino-v1.csv"
 
     # Carregar o dataset e verificar as classes

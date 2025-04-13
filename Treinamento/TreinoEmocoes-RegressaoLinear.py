@@ -33,8 +33,8 @@ def treinarClassificacaoEmocao(df):
 
 
 if __name__ == "__main__":
-    nltk.download('stopwords')
-    nltk.download('rslp')
+    nltk.download('all')
+
     dataset = f'{base_dir}\\Treinamento\\Datasets\\EmocoesDatasetTreinamento-v1.csv'
     
     # Carregar o dataset e verificar as classes

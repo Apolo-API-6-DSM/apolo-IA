@@ -12,7 +12,7 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def treinarClassificacaoTipoChamado(df, le):
+def treinarClassificacaoEmocoes(df, le):
 
     features = Features({
         "Mensagem": Value("string"),
@@ -32,7 +32,7 @@ def treinarClassificacaoTipoChamado(df, le):
 
     # Argumentos de treino
     training_args = TrainingArguments(
-        output_dir="./Treinamento/Exportados/BERTimbau/TipoChamado",
+        output_dir="./Treinamento/Exportados/BERTimbau/Emocoes",
         eval_strategy="epoch",
         save_strategy="epoch",
         logging_dir="./logs",
@@ -60,9 +60,9 @@ def treinarClassificacaoTipoChamado(df, le):
     trainer.evaluate()
 
     # Salvar modelo e label encoder
-    model.save_pretrained("Treinamento/Exportados/BERTimbau/TipoChamado/modelo")
-    tokenizer.save_pretrained("Treinamento/Exportados/BERTimbau/TipoChamado/tokenizer")
-    joblib.dump(le, "Treinamento/Exportados/BERTimbau/TipoChamado/label_encoder.pkl")
+    model.save_pretrained("Treinamento/Exportados/BERTimbau/Emocoes/modelo")
+    tokenizer.save_pretrained("Treinamento/Exportados/BERTimbau/Emocoes/tokenizer")
+    joblib.dump(le, "Treinamento/Exportados/BERTimbau/Emocoes/label_encoder.pkl")
 
 
 
@@ -83,7 +83,7 @@ def compute_metrics(eval_pred):
     plt.ylabel('Real')
     plt.title('Matriz de Confusão')
     plt.tight_layout()
-    plt.savefig("confusion_matrix.png")  # Ou plt.show() se quiser só exibir
+    plt.savefig("confusion_matrix_emocao.png")  # Ou plt.show() se quiser só exibir
 
     return {
         "accuracy": report["accuracy"],
@@ -95,13 +95,12 @@ def compute_metrics(eval_pred):
 
 
 if __name__ == "__main__":
-    dataset = "Treinamento\\Datasets\\TiposArquivosTreino-v1.csv"
-    print(transformers.__version__)
-    df = pd.read_csv(dataset)
-    df = df[~df["TipoChamado"].isin(["Informacao", "Reincidencia"])].reset_index(drop=True)
-    df["Mensagem"] = [tornar_texto_legivel_humano(texto) for texto in df["Mensagem"]]
+    dataset = "Treinamento\\Datasets\\EmocoesDatasetTreinamento-v1.csv"
+
+    df = pd.read_csv(dataset, sep=";", encoding="UTF-8", quotechar='"')
+    
     # Encode labels
     le = LabelEncoder()
-    df["label"] = le.fit_transform(df["TipoChamado"])
-    print(TrainingArguments)
-    treinarClassificacaoTipoChamado(df, le)
+    df["label"] = le.fit_transform(df["Emocao"])
+
+    treinarClassificacaoEmocoes(df, le)

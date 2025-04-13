@@ -55,6 +55,12 @@ MONGODB_DBNAME="apolo_ia_db"                         # Nome do banco de dados
 
 API_PORT=8080
 
+# Baixe os modelos:
+
+[Link para os modelos](https://drive.google.com/drive/folders/1slgVvrHyo6IMvCJV4uIf3kxX-dL4q9Hp?usp=drive_link)
+
+Extraia o zip na pasta Exportados com o nome BERTinmbau
+
 # Execute a aplicação
 python app.py
 

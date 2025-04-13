@@ -12,7 +12,6 @@ def pre_processar_treino(texto):
     texto = tornar_texto_legivel_humano(texto)
     texto = re.sub(r'[^\w\s]', ' ', texto) #Tirar caracteres especiais
     texto = re.sub(r'\d+', ' ', texto)       # Remove números
-    texto = re.sub(r'\b[^eé\s]\b', '', texto) #  Regex para identificar letras sozinhas que não sejam 'e' ou 'é'
     texto = texto.lower() #Deixar palavras em lowercase
 
     #Tokenizar

@@ -2,33 +2,39 @@ from PreProcessamento.preProcessamento import pre_processar
 from sklearn.feature_extraction.text import TfidfVectorizer
 import joblib
 import os
-
+from transformers import BertTokenizer, BertForSequenceClassification
+import torch
 
 base_dir = os.getcwd()
 
-tfidfEmocao = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\emocao_vetorizador.pkl')
-modeloEmocao= joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\modelo_emocao.pkl')
 
-tfidfTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\tipo_chamado_vetorizador.pkl')
-modeloTipoChamado = joblib.load(f'{base_dir}\\Treinamento\\Exportados\\RegressaoLinear\\modelo_tipo_chamado.pkl')
+modeloTipoChamadoTimbau = BertForSequenceClassification.from_pretrained("Treinamento/Exportados/BERTimbau/TipoChamado/modelo")
+tokenizerTipoChamado = BertTokenizer.from_pretrained("Treinamento/Exportados/BERTimbau/TipoChamado/tokenizer")
+label_encoder_TipoChamado = joblib.load("Treinamento/Exportados/BERTimbau/TipoChamado/label_encoder.pkl")
 
-def prever(texto, tfidf, modelo):
-    # Pré-processar o texto
-    texto_processado = pre_processar(texto)
-    
-    # Transformar o texto em vetores TF-IDF
-    texto_vetorizado = tfidf.transform([texto_processado])
-    
-    # Fazer a previsão
-    emocao = modelo.predict(texto_vetorizado)
-    
-    return emocao[0]
+modeloEmocaoTimbau = BertForSequenceClassification.from_pretrained("Treinamento/Exportados/BERTimbau/Emocoes/modelo")
+tokenizerEmocao = BertTokenizer.from_pretrained("Treinamento/Exportados/BERTimbau/Emocoes/tokenizer")
+label_encoder_Emocao = joblib.load("Treinamento/Exportados/BERTimbau/Emocoes/label_encoder.pkl")
+
+
+def preverTimbau(texto, tokenizer, modelo, labelEncoder):
+    inputs = tokenizer(texto, return_tensors="pt", truncation=True, padding=True, max_length=512)
+
+    with torch.no_grad():
+        outputs = modelo(**inputs)
+
+    logits = outputs.logits
+    predicted_class_id = torch.argmax(logits, dim=-1).item()
+
+    predicted_class = labelEncoder.inverse_transform([predicted_class_id])[0]
+    return predicted_class
+
 
 def preverListaChamados(chamados):
     chamados_previstos = []
     for chamado in chamados:
-        emocao = prever(chamado["descricao"],tfidfEmocao, modeloEmocao)
-        tipoChamado = prever(chamado["descricao"],tfidfTipoChamado, modeloTipoChamado)
+        emocao = preverTimbau(chamado["descricao"], tokenizerEmocao, modeloEmocaoTimbau, label_encoder_Emocao)
+        tipoChamado = preverTimbau(chamado["descricao"], tokenizerTipoChamado, modeloTipoChamadoTimbau, label_encoder_TipoChamado)
         #tipoDocumento = preverTipoDocumento(chamado["descricao"])
         chamado_previsto = {
             "chamadoId":chamado["chamadoId"],
