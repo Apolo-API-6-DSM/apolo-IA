@@ -41,11 +41,13 @@ def prever_emocoes():
                 "chamadoId": c["chamadoId"],
                 "descricao": c["descricao"],
                 "emocao": r.get("emocao"),
-                "tipoChamado": r.get("tipoChamado")
+                "tipoChamado": r.get("tipoChamado"),
+                "sumarizacao":r.get("sumarizacao")
             }
             for c, r in zip(chamados, resultados)
         ]}
-
+        logging.info(f"Resultado: {resultados[0]["sumarizacao"]}")
+        logging.info(f"Payload: {payload['chamados'][0]["sumarizacao"]}")
         response = requests.post(NESTJS_URL, json=payload)
 
         # Verifica se os dados foram salvos com sucesso

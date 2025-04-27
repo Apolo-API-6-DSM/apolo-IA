@@ -13,6 +13,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_path)  # Removi from_flax=True a menos que seja necessário
 
 def sumarizacao(text):
+    text = "summarize in portuguese: " + text
     text = text.replace("<", "").replace(">", "")
     inputs = tokenizer.encode(text, max_length=512, truncation=True, return_tensors='pt')
     summary_ids = model.generate(inputs, max_length=74, min_length=32, num_beams=5, no_repeat_ngram_size=3, early_stopping=True)
