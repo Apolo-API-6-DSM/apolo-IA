@@ -1,5 +1,5 @@
 venv/
 __pycache__/
 .env
-Treinamento/Exportados/BERTimbau/
+Treinamento/Exportados/BERTClassificacao/
 Treinamento/Exportados/Sumarizacao/

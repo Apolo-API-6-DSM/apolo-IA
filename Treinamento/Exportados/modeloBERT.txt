@@ -1,2 +1,0 @@
-Download dos modelos de previsão treinados BERT:
-https://drive.google.com/drive/folders/1slgVvrHyo6IMvCJV4uIf3kxX-dL4q9Hp?usp=drive_link
