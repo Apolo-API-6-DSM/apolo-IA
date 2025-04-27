@@ -57,9 +57,18 @@ API_PORT=8080
 
 # Baixe os modelos:
 
+## Modelos de classificacao
+
 [Link para os modelos](https://drive.google.com/drive/folders/1slgVvrHyo6IMvCJV4uIf3kxX-dL4q9Hp?usp=drive_link)
 
-Extraia o zip na pasta Exportados com o nome BERTinmbau
+Extraia o zip na pasta Exportados com o nome BERTClassificacao
+
+## Modelo de sumarizacao
+
+[Link para modelo](https://drive.google.com/file/d/1YBfJtl_qVJk7WlAxkaoqOy-cWbJG-kVj/view?usp=sharing)
+
+Extraia o zip na pasta Exportados com o nome Sumarizacao
+
 
 # Execute a aplicação
 python app.py
